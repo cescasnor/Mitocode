@@ -3,6 +3,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.CategoryDTO;
 import com.mitocode.model.Category;
 import com.mitocode.service.ICategoryService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -45,13 +46,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> create(@RequestBody CategoryDTO dto) throws Exception{
+    public ResponseEntity<CategoryDTO> create(@Valid @RequestBody CategoryDTO dto) throws Exception{
         Category obj = service.save(mapper.map(dto,Category.class));
         return new ResponseEntity<>(mapper.map(obj, CategoryDTO.class), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<Category> update(@Valid @RequestBody Category category, @PathVariable("id") Integer id) throws Exception{
         Category obj = service.update(category, id);
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

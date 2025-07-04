@@ -1,6 +1,6 @@
 package com.mitocode.dto;
 
-import jakarta.validation.constraints.Min;
+import com.mitocode.model.Role;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,26 +11,23 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
+public class UserDTO {
 
-    private Integer idProduct;
-
-    @NotNull
-    @Min(value = 1)
-    private Integer idCategoria;
+    private Integer idUser;
 
     @NotNull
+    private Role role;
+
     @NotEmpty
-    private String nameProduct;
-
     @NotNull
+    @Size(min = 3, max = 50)
+    private String username;
+
     @NotEmpty
-    private String descriptionProduct;
-
-    @Min(value = 1)
-    private Double priceProduct;
+    @NotNull
+    @Size(min = 3, max = 60)
+    private String password;
 
     @NotNull
-    private boolean enabledProduct;
-
+    private boolean enabled;
 }

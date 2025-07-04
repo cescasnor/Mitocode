@@ -3,6 +3,7 @@ package com.mitocode.controller;
 import com.mitocode.dto.ProductDTO;
 import com.mitocode.model.Product;
 import com.mitocode.service.IProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,13 +41,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductDTO dto) throws Exception{
+    public ResponseEntity<ProductDTO> create(@Valid  @RequestBody ProductDTO dto) throws Exception{
         Product obj = service.save(mapper.map(dto,Product.class));
         return new ResponseEntity<>(mapper.map(obj, ProductDTO.class), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@RequestBody Product category, @PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<Product> update(@Valid @RequestBody Product category, @PathVariable("id") Integer id) throws Exception{
         Product obj = service.update(category, id);
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }

@@ -5,6 +5,7 @@ import com.mitocode.model.Client;
 import com.mitocode.repo.ICategoryRepo;
 import com.mitocode.repo.IGenericRepo;
 import com.mitocode.service.ICategoryService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,28 @@ public class CategoryServiceImpl extends CRUDImpl<Category, Integer> implements 
     protected IGenericRepo<Category, Integer> getRepo() {
         return categoryRepo;
     }
+
+    @Override
+    public List<Category> findByName(String name) {
+        return categoryRepo.findByName(name);
+    }
+
+    @Override
+    public List<Category> findByNameLike(String name) {
+        return categoryRepo.findByNameLike("%" + name + "%");
+    }
+
+    @Override
+    public List<Category> findByNameAndEnabled(String name, boolean enabled) {
+        return categoryRepo.findByNameAndEnabled(name, enabled);
+    }
+
+    //@Transactional -> En caso se tenga varios updates, select, etc . en un solo metodo y Falla alguno se hace rollback
+    @Override
+    public List<Category> findByNameAndDescription(String name, String description) {
+        return categoryRepo.findByNameAndDescription(name, description);
+    }
+
 
     /*
     @Override

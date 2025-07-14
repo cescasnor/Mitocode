@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +56,31 @@ public class CategoryController {
     public ResponseEntity<Category> update(@Valid @RequestBody Category category, @PathVariable("id") Integer id) throws Exception{
         Category obj = service.update(category, id);
         return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+
+    //  QUERIES
+    @GetMapping("/find/name/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByName(@PathVariable("name") String name) throws Exception{
+        List<CategoryDTO> categoria = service.findByName(name).stream().map( e -> mapper.map(e, CategoryDTO.class) ).toList();
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/name/like/{name}")
+    public ResponseEntity<List<CategoryDTO>> findByNameLike(@PathVariable("name") String name) throws Exception{
+        List<CategoryDTO> categoria = service.findByNameLike(name).stream().map( e -> mapper.map(e, CategoryDTO.class) ).toList();
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/name/{name}/{enabled}")
+    public ResponseEntity<List<CategoryDTO>> findByNameLikeAndEnabled(@PathVariable("name") String name, @PathVariable("enabled") Boolean enabled) throws Exception{
+        List<CategoryDTO> categoria = service.findByNameAndEnabled(name,enabled).stream().map( e -> mapper.map(e, CategoryDTO.class) ).toList();
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/name/description")
+    public ResponseEntity<List<CategoryDTO>> getNameDescription(@RequestParam("name") String name, @RequestParam("description") String description) throws Exception{
+        List<CategoryDTO> categoria = service.findByNameAndDescription(name,description).stream().map( e -> mapper.map(e, CategoryDTO.class) ).toList();
+        return new ResponseEntity<>(categoria, HttpStatus.OK);
     }
 
     /*

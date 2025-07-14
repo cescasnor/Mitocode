@@ -1,5 +1,6 @@
 package com.mitocode.model;
 
+import com.mitocode.dto.ProcedureDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,20 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+@NamedNativeQuery(
+        name = "Sale.fn_sales",
+        query = "select * from fn_sales()",
+        resultSetMapping = "Procedure.ProcedureDTO"
+)
+
+@SqlResultSetMapping(
+        name = "Procedure.ProcedureDTO",
+        classes = @ConstructorResult(targetClass = ProcedureDTO.class, columns = {
+            @ColumnResult(name = "quantityfn", type = Integer.class),
+            @ColumnResult(name = "datetimefn", type = String.class)
+        })
+)
 
 @Data
 @NoArgsConstructor

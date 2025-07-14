@@ -28,4 +28,8 @@ public class Category {
     @Column(nullable = false)
     private boolean enabled;
 
+    Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

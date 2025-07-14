@@ -1,5 +1,7 @@
 package com.mitocode.controller;
 
+import com.mitocode.dto.IProcedureDTO;
+import com.mitocode.dto.ProcedureDTO;
 import com.mitocode.dto.SaleDTO;
 import com.mitocode.model.Sale;
 import com.mitocode.service.ISaleService;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/sales")
@@ -52,4 +55,14 @@ public class SaleController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
+    // Queries //
+    @GetMapping("/resume")
+    public ResponseEntity<List<ProcedureDTO>> getSaleResume1() {
+        return new ResponseEntity<>(service.callProcedure1(), HttpStatus.OK);
+    }
+    // Queries //
+    @GetMapping("/resum2")
+    public ResponseEntity<List<IProcedureDTO>> getSaleResume2() {
+        return new ResponseEntity<>(service.callProcedure2(), HttpStatus.OK);
+    }
 }

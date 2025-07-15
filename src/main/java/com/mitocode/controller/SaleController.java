@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -61,8 +62,33 @@ public class SaleController {
         return new ResponseEntity<>(service.callProcedure1(), HttpStatus.OK);
     }
     // Queries //
-    @GetMapping("/resum2")
+    @GetMapping("/resume2")
     public ResponseEntity<List<IProcedureDTO>> getSaleResume2() {
         return new ResponseEntity<>(service.callProcedure2(), HttpStatus.OK);
+    }
+
+    // Procedure //
+    @GetMapping("/resume4")
+    public ResponseEntity<Void> getSaleResume4() {
+        service.callProcedure4();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    // Procedure //
+    @GetMapping("/mostExpensive")
+    public ResponseEntity<SaleDTO> getMostExpensive() {
+        SaleDTO dto =  mapper.map(service.getSaleMostExpensive() ,  SaleDTO.class);
+        return new ResponseEntity<>(dto,HttpStatus.OK);
+    }
+
+    @GetMapping("/bestSeller")
+    public ResponseEntity<String> getbestSeller() {
+        String userName =  service.getBestSellerName() ;
+        return new ResponseEntity<>(userName, HttpStatus.OK);
+    }
+
+    @GetMapping("/countBySeller")
+    public ResponseEntity<Map<String,Long>> getCountSeller() {
+        Map<String,Long> byUser =  service.getSalesCountBySeller() ;
+        return new ResponseEntity<>(byUser, HttpStatus.OK);
     }
 }
